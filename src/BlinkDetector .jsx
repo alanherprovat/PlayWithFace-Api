@@ -523,8 +523,8 @@ const handlePlayPause = () => {
       {cameraStream?(
          <div style={{
           position: 'relative',
-          width: videoRef.current?.width || 640, // Fallback width if `videoRef.current` is undefined
-          height: videoRef.current?.height || 360, // Fallback height   
+          // width: videoRef.current?.width || 640, // Fallback width if `videoRef.current` is undefined
+          // height: videoRef.current?.height || 360, // Fallback height   
 
        }}>
        {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
