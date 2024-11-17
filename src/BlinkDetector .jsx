@@ -354,8 +354,8 @@ const handlePlayPause = () => {
     let isLeftEyeClosed=false
     let isRightEyeClosed=false
     if (cameraStream){
-       isLeftEyeClosed = leftEAR < 0.30;
-       isRightEyeClosed = rightEAR < 0.30;
+       isLeftEyeClosed = leftEAR < 0.24;
+       isRightEyeClosed = rightEAR < 0.24;
 
     }else{
       // Check if eyes are closed based on EAR threshold = 0.25
