@@ -260,7 +260,7 @@ const handlePlayPause = () => {
   // Scale down the video and set the canvas to the new size
   canvas.width = targetWidth;
   canvas.height = targetHeight;
-  ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
+  // ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
 
 
   //utilizing TinyFaceDetector model
