@@ -224,8 +224,8 @@ const handlePlayPause = () => {
         targetHeight = video.videoHeight;
     }
     else{
-      targetWidth = 360;
-      targetHeight = 640;
+      targetWidth = 640;
+      targetHeight = 360;
     }
 
     // // Define resized dimensions for faster processing (e.g., 640x360 for HD videos)
