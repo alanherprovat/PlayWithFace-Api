@@ -511,6 +511,7 @@ const handlePlayPause = () => {
         <video
           ref={videoRef}
           style={styles.video}
+          autoPlay
           // src={videoFile}
           playsInline
           onPlay={handleVideoPlay}
