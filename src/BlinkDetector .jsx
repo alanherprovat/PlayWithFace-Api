@@ -351,18 +351,10 @@ const handlePlayPause = () => {
     // Calculate EAR for both eyes
     const leftEAR = calculateEAR(leftEye);
     const rightEAR = calculateEAR(rightEye);
-    let isLeftEyeClosed=false
-    let isRightEyeClosed=false
-    if (cameraStream){
-       isLeftEyeClosed = leftEAR < 0.24;
-       isRightEyeClosed = rightEAR < 0.24;
-
-    }else{
-      // Check if eyes are closed based on EAR threshold = 0.25
-       isLeftEyeClosed = leftEAR < EAR_THRESHOLD;
-       isRightEyeClosed = rightEAR < EAR_THRESHOLD;
-    }
- 
+    
+    // Check if eyes are closed based on EAR threshold
+    const isLeftEyeClosed = leftEAR < EAR_THRESHOLD;
+    const isRightEyeClosed = rightEAR < EAR_THRESHOLD;
 
   // Increment closed frames count if either eye is detected as closed
   if (isLeftEyeClosed) {
@@ -377,8 +369,10 @@ const handlePlayPause = () => {
     rightEyeClosedFrames = 0;
   }
 
+
    // Detect a blink if either eye has been below the threshold for enough consecutive frames
-   const isBlinkDetected = leftEyeClosedFrames >= EAR_CONSEC_FRAMES || rightEyeClosedFrames >= EAR_CONSEC_FRAMES;
+   const isBlinkDetected = cameraStream? (leftEyeClosedFrames >= EAR_CONSEC_FRAMES || rightEyeClosedFrames >= EAR_CONSEC_FRAMES) :
+   (leftEyeClosedFrames >= 5 || rightEyeClosedFrames >= 5);
    
     // If a blink is detected and no blink is in progress, increment the blink count
     if (isBlinkDetected && !blinkInProgress) {
