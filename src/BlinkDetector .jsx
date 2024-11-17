@@ -523,8 +523,8 @@ const handlePlayPause = () => {
       {cameraStream?(
          <div style={{
           position: 'relative',
-          width:"640",
-          height:"480"
+          width:"640px",
+          height:"480px"
        }}>
        {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
        <video
