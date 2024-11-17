@@ -351,9 +351,18 @@ const handlePlayPause = () => {
     // Calculate EAR for both eyes
     const leftEAR = calculateEAR(leftEye);
     const rightEAR = calculateEAR(rightEye);
-    // Check if eyes are closed based on EAR threshold
-    const isLeftEyeClosed = leftEAR < EAR_THRESHOLD;
-    const isRightEyeClosed = rightEAR < EAR_THRESHOLD;
+    let isLeftEyeClosed=false
+    let isRightEyeClosed=false
+    if (cameraStream){
+       isLeftEyeClosed = leftEAR < 0.30;
+       isRightEyeClosed = rightEAR < 0.30;
+
+    }else{
+      // Check if eyes are closed based on EAR threshold = 0.25
+       isLeftEyeClosed = leftEAR < EAR_THRESHOLD;
+       isRightEyeClosed = rightEAR < EAR_THRESHOLD;
+    }
+ 
 
   // Increment closed frames count if either eye is detected as closed
   if (isLeftEyeClosed) {
