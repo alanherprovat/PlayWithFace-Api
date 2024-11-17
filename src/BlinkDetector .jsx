@@ -7,6 +7,8 @@ const styles = {
     position: 'relative',
     // width: '360px',
     // height: '640px',
+    width: '640px',
+    height: '360px',
     // margin: '20px auto',
   },
   video: {
