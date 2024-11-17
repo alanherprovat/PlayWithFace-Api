@@ -425,11 +425,11 @@ const handlePlayPause = () => {
       } else {
         console.log('No face detected in frame');
       }
-      setTimeout(()=>{
-        detectionRef.current.animationFrame = requestAnimationFrame(detectFace);
-      },0.5) //5ms of delay
+      // setTimeout(()=>{
+      //   detectionRef.current.animationFrame = requestAnimationFrame(detectFace);
+      // },0.5) //5ms of delay
 
-      // detectionRef.current.animationFrame = requestAnimationFrame(detectFace);
+      detectionRef.current.animationFrame = requestAnimationFrame(detectFace);
       
 
     } catch (error) {
