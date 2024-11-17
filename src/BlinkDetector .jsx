@@ -457,7 +457,10 @@ const handlePlayPause = () => {
   const enableCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoRef.current.srcObject = stream;
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream; // Attach the stream to the video element
+      }
       setCameraStream(stream);
 
       isPlayingRef.current = true;
