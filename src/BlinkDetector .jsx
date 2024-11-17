@@ -220,7 +220,7 @@ const handlePlayPause = () => {
     console.log("vedio dimention",video.videoWidth,video.videoHeight)
 
     if (cameraStream){
-        targetWidth = 640;
+        targetWidth = 480;
         targetHeight = 360;
 
         console.log("camera stream true!!")
