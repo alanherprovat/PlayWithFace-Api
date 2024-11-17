@@ -19,6 +19,8 @@ const styles = {
     position: 'absolute',
     width: '100%',
     height: '100%',
+    justifyContent:'center',
+    alignItems:'center'
   },
   controls: {
     marginTop: '20px',
@@ -217,15 +219,24 @@ const handlePlayPause = () => {
     let targetWidth=0,targetHeight=0;
     console.log("vedio dimention",video.videoWidth,video.videoHeight)
 
-    // Define resized dimensions for faster processing (e.g., 640x360 for HD videos)
-    if(video.videoWidth>video.videoHeight){
-         targetWidth = 360;
-         targetHeight = 640;
+    if (cameraStream){
+        targetWidth = 640;
+        targetHeight = 360;
     }
     else{
-         targetWidth = video.videoWidth>640? 640: video.videoWidth;
-         targetHeight = video.videoHeight>360? 360:video.videoHeight;
+      targetWidth = 360;
+      targetHeight = 640;
     }
+
+    // // Define resized dimensions for faster processing (e.g., 640x360 for HD videos)
+    // if(video.videoWidth>video.videoHeight){
+    //      targetWidth = 360;
+    //      targetHeight = 640;
+    // }
+    // else{
+    //      targetWidth = video.videoWidth>640? 640: video.videoWidth;
+    //      targetHeight = video.videoHeight>360? 360:video.videoHeight;
+    // }
 
 
 
@@ -503,33 +514,63 @@ const handlePlayPause = () => {
           title="Choose a video file"
         />
       </div>
+
+
+      {cameraStream?(
+         <div style={{
+          position: 'relative',
+          width: videoRef.current?.width || 640, // Fallback width if `videoRef.current` is undefined
+          height: videoRef.current?.height || 360, // Fallback height   
+
+       }}>
+       {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+       <video
+         ref={videoRef}
+         style={styles.video}
+         autoPlay
+         playsInline
+         onPlay={handleVideoPlay}
+         onPause={handleVideoPause}
+         onEnded={handleVideoPause}
+         // width="640"
+         // height="480"
+       />
+       <canvas
+         ref={canvasRef}
+         style={styles.canvas}
+         // width="640"
+         // height="480"
+       />
+     </div>
+
+      ):(
+        <div style={{
+          position: 'relative',
+          width: videoRef.current?.width || 360, // Fallback width if `videoRef.current` is undefined
+          height: videoRef.current?.height || 640 // Fallback height
       
-      <div style={{
-           position: 'relative',
-           width: videoRef.current?.width || 360, // Fallback width if `videoRef.current` is undefined
-           height: videoRef.current?.height || 640 // Fallback height
-       
-        }}>
-        {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-        <video
-          ref={videoRef}
-          style={styles.video}
-          autoPlay
-          // src={videoFile}
-          playsInline
-          onPlay={handleVideoPlay}
-          onPause={handleVideoPause}
-          onEnded={handleVideoPause}
-          // width="640"
-          // height="480"
-        />
-        <canvas
-          ref={canvasRef}
-          style={styles.canvas}
-          // width="640"
-          // height="480"
-        />
-      </div>
+       }}>
+       {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+       <video
+         ref={videoRef}
+         style={styles.video}
+         src={videoFile}
+         playsInline
+         onPlay={handleVideoPlay}
+         onPause={handleVideoPause}
+         onEnded={handleVideoPause}
+         // width="640"
+         // height="480"
+       />
+       <canvas
+         ref={canvasRef}
+         style={styles.canvas}
+         // width="640"
+         // height="480"
+       />
+        </div>
+      )}
+     
 
       <div style={styles.controls}>
         <button onClick={handlePlayPause} disabled={!videoFile}  style={{ margin: "10px", padding: "10px" }}>
