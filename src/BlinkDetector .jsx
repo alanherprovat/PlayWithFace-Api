@@ -5,8 +5,8 @@ import * as faceapi from 'face-api.js';
 const styles = {
   container: {
     position: 'relative',
-    width: '360px',
-    height: '640px',
+    // width: '360px',
+    // height: '640px',
     // margin: '20px auto',
   },
   video: {
@@ -220,7 +220,7 @@ const handlePlayPause = () => {
     console.log("vedio dimention",video.videoWidth,video.videoHeight)
 
     if (cameraStream){
-        targetWidth = 480;
+        targetWidth = 640;
         targetHeight = 360;
 
         console.log("camera stream true!!")
