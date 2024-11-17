@@ -409,13 +409,13 @@ const handlePlayPause = () => {
 
 
 
-      // Draw each of the 68 landmarks
-      ctx.fillStyle = '#0000ff'; // Blue for face landmarks
-      positions.forEach(point => {
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
-        ctx.fill();
-      });
+      // // Draw each of the 68 landmarks
+      // ctx.fillStyle = '#0000ff'; // Blue for face landmarks
+      // positions.forEach(point => {
+      //   ctx.beginPath();
+      //   ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
+      //   ctx.fill();
+      // });
       
 
         // Draw eyes specifically
@@ -431,7 +431,7 @@ const handlePlayPause = () => {
         ctx.fillStyle = detectionRef.current.color;
         ctx.fillText(`Blink Count: ${blinkCountRef.current}`, 50, 30);
 
-         // Draw blink count
+         // Draw Expression
          ctx.font = '20px Arial';
          ctx.fillStyle = detectionRef.current.color;
          ctx.fillText(`Expression: ${faceExpressionRef.current}`, 50, 50);
