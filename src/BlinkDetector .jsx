@@ -459,6 +459,11 @@ const handlePlayPause = () => {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       videoRef.current.srcObject = stream;
       setCameraStream(stream);
+
+      isPlayingRef.current = true;
+      setIsPlaying(true);
+      detectFace();
+
     } catch (error) {
       console.error("Error accessing the webcam:", error);
       alert("Could not access the camera. Please check permissions.");
@@ -506,7 +511,7 @@ const handlePlayPause = () => {
         <video
           ref={videoRef}
           style={styles.video}
-          src={videoFile}
+          // src={videoFile}
           playsInline
           onPlay={handleVideoPlay}
           onPause={handleVideoPause}
