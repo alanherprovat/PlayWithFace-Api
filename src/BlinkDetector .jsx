@@ -402,7 +402,7 @@ const handlePlayPause = () => {
 
 
 
-        const resizedDetections = faceapi.resizeResults(detection, { width: targetWidth, height: targetHeight });
+        const resizedDetections = faceapi.resizeResults(detection, { width: 640, height: 360 });
         faceapi.draw.drawDetections(canvas, resizedDetections);
         faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
 
