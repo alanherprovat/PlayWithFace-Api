@@ -222,6 +222,8 @@ const handlePlayPause = () => {
     if (cameraStream){
         targetWidth = video.videoWidth;
         targetHeight = video.videoHeight;
+
+        console.log("camera stream true!!")
     }
     else{
       targetWidth = 640;
