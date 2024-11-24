@@ -3,11 +3,13 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import BlinkDetector from './BlinkDetector '
+import BlinkDetection from './BlinkDetection'
 function App() {
   return (
     <div className="App">
       <h1>Blink Detection App</h1>
-      <BlinkDetector />
+      {/* <BlinkDetector /> */}
+      <BlinkDetection/>
     </div>
   );
 }
