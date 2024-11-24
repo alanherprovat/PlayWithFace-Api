@@ -54,8 +54,11 @@ const BlinkDetector = () => {
   const faceExpressionRef = useRef('');
   const [faceExpression,setFaceExpression]= useState('');
   const [cameraStream, setCameraStream] = useState(null);
-
   const [selectedAction, setSelectedAction] = useState("");
+  const ratioListLeft = []
+  const ratioListRight = []
+  var leftEyeRatioAvg=50;
+  var rightEyeRatioAvg=50;
 
   const handleRadioChange = (event) => {
     setSelectedAction(event.target.value);
@@ -366,10 +369,35 @@ const handlePlayPause = () => {
     // Calculate EAR for both eyes
     const leftEAR = calculateEAR(leftEye);
     const rightEAR = calculateEAR(rightEye);
+
+    ratioListLeft.push(leftEAR)
+    ratioListRight.push(rightEAR)
+
+    if (ratioListLeft.length > 3) {
+      ratioListLeft.shift(); // Remove the first element (FIFO)
+      leftEyeRatioAvg = ratioListLeft.reduce((acc, val) => acc + val, 0) / ratioListLeft.length;
+      
+  }
+  
+  if (ratioListRight.length > 3) {
+      ratioListRight.shift(); // Remove the first element (FIFO)
+      rightEyeRatioAvg = ratioListRight.reduce((acc, val) => acc + val, 0) / ratioListRight.length;
+     
+  }
+  
+           
+
+    console.log("Left Eye Ratio Average:",leftEyeRatioAvg)
+    console.log("Right Eye Ratio Averag",rightEyeRatioAvg)
     
     // Check if eyes are closed based on EAR threshold
-    const isLeftEyeClosed = leftEAR < EAR_THRESHOLD;
-    const isRightEyeClosed = rightEAR < EAR_THRESHOLD;
+    // const isLeftEyeClosed = leftEAR < EAR_THRESHOLD;
+    // const isRightEyeClosed = rightEAR < EAR_THRESHOLD;
+
+
+
+    const isLeftEyeClosed = (leftEyeRatioAvg+rightEyeRatioAvg)/2 < EAR_THRESHOLD;
+    const isRightEyeClosed = (leftEyeRatioAvg+rightEyeRatioAvg)/2 < EAR_THRESHOLD;
 
   // Increment closed frames count if either eye is detected as closed
   if (isLeftEyeClosed) {
