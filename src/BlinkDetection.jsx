@@ -299,18 +299,48 @@ const getLeftEyebrow = (landmarks) => {
 
       {cameraStream &&
 
-      (
+    //   (
 
-     <div style={{
+    //  <div style={{
+    //       position: 'relative',
+    //       width:"640px",
+    //       height:"480px"
+    //    }}>
+    //    {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+    //    <video
+    //      ref={videoRef}
+    //      style={styles.video}
+    //      autoPlay
+    //      playsInline
+    //      onPlay={handleVideoPlay}
+    //      onPause={handleVideoPause}
+    //      onEnded={handleVideoPause}
+    //      // width="640"
+    //      // height="480"
+    //    />
+    //    <canvas
+    //      ref={canvasRef}
+    //      style={styles.canvas}
+    //      // width="640"
+    //      // height="480"
+    //    />
+    //  </div>
+
+    //   )
+
+    //   :
+      (
+        <div style={{
           position: 'relative',
-          width:"640px",
-          height:"480px"
+          width: videoRef.current?.width || 360, // Fallback width if `videoRef.current` is undefined
+          height: videoRef.current?.height || 640 // Fallback height
+      
        }}>
        {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
        <video
          ref={videoRef}
          style={styles.video}
-         autoPlay
+         src={videoFile}
          playsInline
          onPlay={handleVideoPlay}
          onPause={handleVideoPause}
@@ -324,38 +354,8 @@ const getLeftEyebrow = (landmarks) => {
          // width="640"
          // height="480"
        />
-     </div>
-
+        </div>
       )
-
-      // :
-      // (
-      //   <div style={{
-      //     position: 'relative',
-      //     width: videoRef.current?.width || 360, // Fallback width if `videoRef.current` is undefined
-      //     height: videoRef.current?.height || 640 // Fallback height
-      
-      //  }}>
-      //  {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-      //  <video
-      //    ref={videoRef}
-      //    style={styles.video}
-      //    src={videoFile}
-      //    playsInline
-      //    onPlay={handleVideoPlay}
-      //    onPause={handleVideoPause}
-      //    onEnded={handleVideoPause}
-      //    // width="640"
-      //    // height="480"
-      //  />
-      //  <canvas
-      //    ref={canvasRef}
-      //    style={styles.canvas}
-      //    // width="640"
-      //    // height="480"
-      //  />
-      //   </div>
-      // )
       
       }
 
