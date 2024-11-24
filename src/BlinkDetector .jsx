@@ -54,6 +54,12 @@ const BlinkDetector = () => {
   const faceExpressionRef = useRef('');
   const [cameraStream, setCameraStream] = useState(null);
 
+  const [selectedAction, setSelectedAction] = useState("");
+
+  const handleRadioChange = (event) => {
+    setSelectedAction(event.target.value);
+};
+
   let blinkInProgress = false;
 
   // Threshold for determining if eye is open or closed
@@ -575,6 +581,36 @@ const handlePlayPause = () => {
        />
         </div>
       )}
+
+              <div style={styles.stats}>
+                <label style={{ marginRight: "20px" }}>
+                    <input
+                        type="radio"
+                        name="action"
+                        value="blink"
+                        // checked={selectedAction === {blinkCount}>=2}
+                        checked={blinkCount>=2}
+                        onChange={handleRadioChange}
+                        style={{ marginRight: "5px" }}
+                    />
+                    Please Blink Two Times
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        name="action"
+                        value="smile"
+                        checked={blinkCount>=2 && faceExpressionRef.current=="happy"}  //Expression: ${faceExpressionRef.current}
+                        onChange={handleRadioChange}
+                        style={{ marginRight: "5px" }}
+                    />
+                    Please Smile
+                </label>
+            </div>
+            {selectedAction && (
+                <p style={{ marginTop: "10px" }}>Selected Action: {selectedAction === "blink" ? "Blink" : "Smile"}</p>
+            )}
+
      
 
       <div style={styles.controls}>
@@ -599,7 +635,9 @@ const handlePlayPause = () => {
         <button onClick={disableCamera} style={{ margin: "10px", padding: "10px" }}>
           Disable Web Camera
         </button>
-      </div>
+
+        
+        </div>
       
       <div style={styles.stats}>
         <p>Blink Count: {blinkCount}</p>
