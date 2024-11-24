@@ -586,7 +586,7 @@ const handlePlayPause = () => {
                 <label style={{ marginRight: "20px" }}>
                     <input
                         type="radio"
-                        name="action"
+                        name="action1"
                         value="blink"
                         // checked={selectedAction === {blinkCount}>=2}
                         checked={blinkCount>=2}
@@ -598,7 +598,7 @@ const handlePlayPause = () => {
                 <label>
                     <input
                         type="radio"
-                        name="action"
+                        name="action2"
                         value="smile"
                         checked={blinkCount>=2 && faceExpressionRef.current=="happy"}  //Expression: ${faceExpressionRef.current}
                         onChange={handleRadioChange}
