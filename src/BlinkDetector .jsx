@@ -52,6 +52,7 @@ const BlinkDetector = () => {
   const isPlayingRef = useRef(false);
   const blinkCountRef = useRef(blinkCount);
   const faceExpressionRef = useRef('');
+  const [faceExpression,setFaceExpression]= useState('');
   const [cameraStream, setCameraStream] = useState(null);
 
   const [selectedAction, setSelectedAction] = useState("");
@@ -81,7 +82,14 @@ let rightEyeClosedFrames = 0;
 
 useEffect(() => {
     blinkCountRef.current = blinkCount;
+    if(blinkCount>=2 &&faceExpressionRef.current=="happy"){
+      setFaceExpression("happy")
+    }
 }, [blinkCount]);
+
+// useEffect(()=>{
+//   setFaceExpression("happy")
+// },[faceExpressionRef.current=="happy"])
 
 useEffect(() => {
     const startDetection = async () => {
@@ -600,7 +608,7 @@ const handlePlayPause = () => {
                         type="radio"
                         name="action2"
                         value="smile"
-                        checked={blinkCount>=2 && faceExpressionRef.current=="happy"}  //Expression: ${faceExpressionRef.current}
+                        checked={blinkCount>=2 && faceExpression=="happy"}  //Expression: ${faceExpressionRef.current}
                         onChange={handleRadioChange}
                         style={{ marginRight: "5px" }}
                     />
