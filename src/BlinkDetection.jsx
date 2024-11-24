@@ -98,8 +98,12 @@ useEffect(() => {
       await loadModels();
       
       // Start continuous detection using requestAnimationFrame
-      detectionRef.current.animationFrame = requestAnimationFrame(
-        detectFace
+      detectionRef.current.animationFrame = requestAnimationFrame(()=>
+        detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,setBlinkCount,
+          faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
+          rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
+          videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
+        )
     );
     };
   
@@ -198,11 +202,11 @@ const handlePlayPause = () => {
                     isPlayingRef.current = true;  // Update ref
                     setIsPlaying(true);  // Update state for UI
 
-                    detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,
-                        faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
-                        rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
-                        videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
-                    );
+                    detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,setBlinkCount,
+                      faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
+                      rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
+                      videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
+                    )
                 })
                 .catch(err => {
                     console.error('Error playing video:', err);
@@ -227,11 +231,11 @@ const handlePlayPause = () => {
     isPlayingRef.current = true;
     setIsPlaying(true);
    
-    detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,
-        faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
-        rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
-        videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
-    );
+    detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,setBlinkCount,
+      faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
+      rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
+      videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
+    )
     
   };
   const handleVideoPause = () => {
@@ -255,11 +259,11 @@ const handlePlayPause = () => {
       isPlayingRef.current = true;
       setIsPlaying(true);
 
-      detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,
+      detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,setBlinkCount,
         faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
         rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
         videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
-    );
+      )
 
     } catch (error) {
       console.error("Error accessing the webcam:", error);

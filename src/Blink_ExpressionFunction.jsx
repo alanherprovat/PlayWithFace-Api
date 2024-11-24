@@ -12,30 +12,30 @@ import * as faceapi from 'face-api.js';
   };
 
 
-  export const detectFace = async (cameraStream,setCameraStream,blinkCountRef,blinkCount,
+  export const detectFace = async (cameraStream,setCameraStream,blinkCountRef,blinkCount,setBlinkCount,
     faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
     rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
     videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying) => {
 
-    if (!videoRef || !canvasRef || !isPlayingRef) {
+      if (!videoRef?.current || !canvasRef?.current || !isPlayingRef?.current) {
         console.log('Detection skipped:', {
-            videoRef: !!videoRef,
-            canvasRef: !!canvasRef,
-            isPlayingRef
+          videoRef: !!videoRef?.current,
+          canvasRef: !!canvasRef?.current,
+          isPlaying
         });
         return;
-        }
+      }
 
 
-    const video = videoRef.current;
+      const video = videoRef.current;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     let targetWidth=0,targetHeight=0;
-    console.log("vedio dimention",video?.videoWidth,video?.videoHeight)
+    console.log("vedio dimention",video.videoWidth,video.videoHeight)
 
     if (cameraStream){
-        targetWidth = video?.videoWidth;
-        targetHeight = video?.videoHeight;
+        targetWidth = video.videoWidth;
+        targetHeight = video.videoHeight;
         console.log("camera stream true!!")
     }
     else{
@@ -43,24 +43,43 @@ import * as faceapi from 'face-api.js';
       targetHeight = 360;
     }
 
+    // // Define resized dimensions for faster processing (e.g., 640x360 for HD videos)
+    // if(video.videoWidth>video.videoHeight){
+    //      targetWidth = 360;
+    //      targetHeight = 640;
+    // }
+    // else{
+    //      targetWidth = video.videoWidth>640? 640: video.videoWidth;
+    //      targetHeight = video.videoHeight>360? 360:video.videoHeight;
+    // }
 
+
+
+    // // Ensure video dimensions match canvas
+    // canvas.width = video.videoWidth;
+    // canvas.height = video.videoHeight;
 
 
 
     try {
       // Add dimensions check
-      if (video?.videoWidth === 0 || video?.videoHeight === 0) {
+      if (video.videoWidth === 0 || video.videoHeight === 0) {
         console.log('Video dimensions not ready:', {
-          width: video?.videoWidth,
-          height: video?.videoHeight
+          width: video.videoWidth,
+          height: video.videoHeight
         });
-        detectionRef.current.animationFrame = requestAnimationFrame(detectFace);
+        detectionRef.current.animationFrame = requestAnimationFrame(()=>
+          detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,setBlinkCount,
+            faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
+            rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
+            videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
+          ));
         return;
       }
 
   // Scale down the video and set the canvas to the new size
-//   canvas.width = targetWidth;
-//   canvas.height = targetHeight;
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
   // ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
 
 
@@ -72,7 +91,13 @@ import * as faceapi from 'face-api.js';
   }))
   .withFaceLandmarks().withFaceExpressions();
 
-
+  // //utilizing SsdMobilenetv10 model
+  // const detection = await faceapi.detectAllFaces(video, new faceapi.SsdMobilenetv1Options(
+  //   {
+  //     minConfidence: 0.5,
+  //     maxResults: 100
+  //   }
+  // )) .withFaceLandmarks().withFaceExpressions();
   
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -96,6 +121,38 @@ import * as faceapi from 'face-api.js';
           Expression_Probability: maxProbability,
       });
 
+
+
+
+
+// //Face detected for SSD Mobile NEt
+
+// const detectionObject = detection[0]; // Get the first detection only
+// if (detectionObject) {
+//     const { detection, landmarks,expressions} = detectionObject;
+
+//     // Check if detection and landmarks exist
+//     if (detection && landmarks && expressions ) {
+
+//       // Find the expression with the maximum probability
+//       const maxExpression = Object.keys(expressions).reduce((a, b) => 
+//         expressions[a] > expressions[b] ? a : b
+//       );
+
+//         console.log(`Score: `,detection?.score);
+//         console.log("Expression:",maxExpression);
+//         console.log("Expression Probability", expressions[maxExpression])
+//         // console.log("Box:", box);
+//         console.log("Landmarks:",landmarks?.positions?.length);
+
+//         faceExpressionRef.current = maxExpression;
+        
+//     } else {
+//         console.warn("Detection or landmarks data is missing.");
+//     }
+// } else {
+//     console.warn("No detection object found in objectDetections.");
+// }
 
 
     
@@ -228,7 +285,12 @@ import * as faceapi from 'face-api.js';
         console.log('No face detected in frame');
       }
       setTimeout(()=>{
-        detectionRef.current.animationFrame = requestAnimationFrame(detectFace);
+        detectionRef.current.animationFrame = requestAnimationFrame(()=>
+          detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,setBlinkCount,
+            faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
+            rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
+            videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
+          ));
       },0.5) //5ms of delay
 
       // detectionRef.current.animationFrame = requestAnimationFrame(detectFace);
@@ -237,6 +299,13 @@ import * as faceapi from 'face-api.js';
     } catch (error) {
       console.error('Error in face detection:', error);
       setError(`Error processing video frame: ${error.message}`);
-      detectionRef.current.animationFrame = requestAnimationFrame(detectFace);
+      detectionRef.current.animationFrame = requestAnimationFrame(()=>
+        detectFace(cameraStream,setCameraStream,blinkCountRef,blinkCount,setBlinkCount,
+          faceExpressionRef,faceExpression,setFaceExpression,ratioListLeft,ratioListRight,leftEyeRatioAvg,
+          rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
+          videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
+        ));
     }
+
+
   };
