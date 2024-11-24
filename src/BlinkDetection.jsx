@@ -152,9 +152,6 @@ useEffect(() => {
     }
   };
 
-
-
-
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -290,71 +287,46 @@ const getLeftEyebrow = (landmarks) => {
 
   return (
     <div>
-      <div style={styles.fileInput}>
+
+      {/* <div style={styles.fileInput}>
         <input 
           type="file" 
           accept="video/*" 
           onChange={handleFileUpload}
           title="Choose a video file"
         />
+      </div> */}
+
+      {cameraStream &&
+
+      <div style={{
+            position: 'relative',
+            width:"640px",
+            height:"480px"
+        }}>
+        {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+        <video
+          ref={videoRef}
+          style={styles.video}
+          autoPlay
+          playsInline
+          onPlay={handleVideoPlay}
+          onPause={handleVideoPause}
+          onEnded={handleVideoPause}
+          // width="640"
+          // height="480"
+        />
+        <canvas
+          ref={canvasRef}
+          style={styles.canvas}
+          // width="640"
+          // height="480"
+        />
       </div>
 
+      }
 
-      {cameraStream?(
-         <div style={{
-          position: 'relative',
-          width:"640px",
-          height:"480px"
-       }}>
-       {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-       <video
-         ref={videoRef}
-         style={styles.video}
-         autoPlay
-         playsInline
-         onPlay={handleVideoPlay}
-         onPause={handleVideoPause}
-         onEnded={handleVideoPause}
-         // width="640"
-         // height="480"
-       />
-       <canvas
-         ref={canvasRef}
-         style={styles.canvas}
-         // width="640"
-         // height="480"
-       />
-     </div>
-
-      ):(
-        <div style={{
-          position: 'relative',
-          width: videoRef.current?.width || 360, // Fallback width if `videoRef.current` is undefined
-          height: videoRef.current?.height || 640 // Fallback height
-      
-       }}>
-       {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-       <video
-         ref={videoRef}
-         style={styles.video}
-         src={videoFile}
-         playsInline
-         onPlay={handleVideoPlay}
-         onPause={handleVideoPause}
-         onEnded={handleVideoPause}
-         // width="640"
-         // height="480"
-       />
-       <canvas
-         ref={canvasRef}
-         style={styles.canvas}
-         // width="640"
-         // height="480"
-       />
-        </div>
-      )}
-
-              <div style={styles.stats}>
+            <div style={styles.stats}>
                 <label style={{ marginRight: "20px" }}>
                     <input
                         type="radio"
@@ -379,14 +351,15 @@ const getLeftEyebrow = (landmarks) => {
                     Please Smile
                 </label>
             </div>
-            {/* {blinkCount>=2 && faceExpression=="happy" && (
+            {blinkCount>=2 && faceExpression=="happy" && (
                 videoRef.current.pause()
-            )} */}
+            )}
 
      
 
       <div style={styles.controls}>
-        <button onClick={handlePlayPause} disabled={!videoFile}  style={{ margin: "10px", padding: "10px" }}>
+
+        {/* <button onClick={handlePlayPause} disabled={!videoFile}  style={{ margin: "10px", padding: "10px" }}>
           {isPlaying ? 'Pause' : 'Play'}
         </button>
         <button  style={{ margin: "10px", padding: "10px" }}
@@ -400,7 +373,8 @@ const getLeftEyebrow = (landmarks) => {
           disabled={!videoFile}
         >
           Reset
-        </button>
+        </button> */}
+
         <button onClick={enableCamera} style={{ margin: "10px", padding: "10px" }}>
           Enable Web Camera
         </button>
