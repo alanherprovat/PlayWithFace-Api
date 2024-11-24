@@ -10,6 +10,13 @@ import * as faceapi from 'face-api.js';
     // EAR formula
     return (verticalDist1 + verticalDist2) / (2.0 * horizontalDist);
   };
+  const calculateAverage = (list, newValue) => {
+    list.push(newValue);
+    if (list.length > 3) {
+        list.shift();
+    }
+    return list.reduce((acc, val) => acc + val, 0) / list.length;
+};
 
 
   export const detectFace = async (cameraStream,setCameraStream,blinkCountRef,blinkCount,setBlinkCount,
@@ -27,7 +34,7 @@ import * as faceapi from 'face-api.js';
       }
 
 
-      const video = videoRef.current;
+    const video = videoRef.current;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     let targetWidth=0,targetHeight=0;
@@ -172,22 +179,14 @@ import * as faceapi from 'face-api.js';
     ratioListLeft.push(leftEAR)
     ratioListRight.push(rightEAR)
 
-    if (ratioListLeft.length > 3) {
-      ratioListLeft.shift(); // Remove the first element (FIFO)
-      leftEyeRatioAvg = ratioListLeft.reduce((acc, val) => acc + val, 0) / ratioListLeft.length;
-      
-  }
-  
-  if (ratioListRight.length > 3) {
-      ratioListRight.shift(); // Remove the first element (FIFO)
-      rightEyeRatioAvg = ratioListRight.reduce((acc, val) => acc + val, 0) / ratioListRight.length;
-     
-  }
+    leftEyeRatioAvg = calculateAverage(ratioListLeft, leftEAR);
+    rightEyeRatioAvg = calculateAverage(ratioListRight, rightEAR);
   
            
 
     console.log("Left Eye Ratio Average:",leftEyeRatioAvg)
     console.log("Right Eye Ratio Averag",rightEyeRatioAvg)
+    console.log("Combined average",(leftEyeRatioAvg+rightEyeRatioAvg)/2)
     
     // Check if eyes are closed based on EAR threshold
     // const isLeftEyeClosed = leftEAR < EAR_THRESHOLD;
