@@ -569,7 +569,7 @@ const handlePlayPause = () => {
          <div style={{
           position: 'relative',
           width:"640px",
-          height:"640px"
+          height:"480px"
        }}>
        {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
        <video
