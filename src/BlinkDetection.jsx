@@ -42,19 +42,19 @@ const styles = {
 };
 
 
-const BlinkDetection = () => {
+const BlinkDetection = ({cameraStream, setCameraStream, blinkCount, setBlinkCount, faceExpression,setFaceExpression}) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [blinkCount, setBlinkCount] = useState(0);
+  // const [blinkCount, setBlinkCount] = useState(0);
   const [videoFile, setVideoFile] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState(null);
   const isPlayingRef = useRef(false);
   const blinkCountRef = useRef(blinkCount);
   const faceExpressionRef = useRef('');
-  const [faceExpression,setFaceExpression]= useState('');
-  const [cameraStream, setCameraStream] = useState(null);
+  // const [faceExpression,setFaceExpression]= useState('');
+  // const [cameraStream, setCameraStream] = useState(null);
   const [selectedAction, setSelectedAction] = useState("");
   const ratioListLeft = []
   const ratioListRight = []
@@ -83,13 +83,6 @@ let rightEyeClosedFrames = 0;
   });
 
   const leftEyePoints = [36,37,38, 40, 41];
-
-useEffect(() => {
-    blinkCountRef.current = blinkCount;
-    if(blinkCount>=2 &&faceExpressionRef.current=="happy"){
-      setFaceExpression("happy")
-    }
-}, [blinkCount]);
 
 
 useEffect(() => {
@@ -123,6 +116,13 @@ useEffect(() => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    blinkCountRef.current = blinkCount;
+    if(blinkCount>=2 &&faceExpressionRef.current=="happy"){
+      setFaceExpression("happy")
+    }
+}, [blinkCount]);
 
 
   const loadModels = async () => {
@@ -218,13 +218,10 @@ const handlePlayPause = () => {
     }
 };
 
-
-  const getLeftEyebrow = (landmarks) => {
-    // Left eyebrow points in the 68-point model are 17–21
-    return landmarks.slice(17, 22);
-  };
-
-
+const getLeftEyebrow = (landmarks) => {
+  // Left eyebrow points in the 68-point model are 17–21
+  return landmarks.slice(17, 22);
+};
 
   const handleVideoPlay = () => {
     console.log('Video play event triggered');
@@ -236,8 +233,8 @@ const handlePlayPause = () => {
       rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
       videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
     )
-    
   };
+
   const handleVideoPause = () => {
     console.log('Video pause event triggered');
     isPlayingRef.current = false;
@@ -382,9 +379,9 @@ const handlePlayPause = () => {
                     Please Smile
                 </label>
             </div>
-            {blinkCount>=2 && faceExpression=="happy" && (
+            {/* {blinkCount>=2 && faceExpression=="happy" && (
                 videoRef.current.pause()
-            )}
+            )} */}
 
      
 
