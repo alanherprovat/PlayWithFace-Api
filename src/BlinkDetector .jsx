@@ -182,7 +182,8 @@ const handlePlayPause = () => {
             console.log('Attempting to pause video');
             videoRef.current.pause();
             isPlayingRef.current = false;  // Update ref
-            setIsPlaying(false);  // Update state for UI
+            setIsPlaying(false);  
+            // Update state for UI
         } else {
             console.log('Attempting to play video');
             // setIsPlaying(true);
@@ -615,8 +616,8 @@ const handlePlayPause = () => {
                     Please Smile
                 </label>
             </div>
-            {selectedAction && (
-                <p style={{ marginTop: "10px" }}>Selected Action: {selectedAction === "blink" ? "Blink" : "Smile"}</p>
+            {blinkCount>=2 && faceExpression=="happy" && (
+                videoRef.current.pause()
             )}
 
      
