@@ -297,38 +297,37 @@ const getLeftEyebrow = (landmarks) => {
       </div>
 
 
-      {cameraStream &&
+      {cameraStream ?
 
-    //   (
+      (
 
-    //  <div style={{
-    //       position: 'relative',
-    //       width:"640px",
-    //       height:"480px"
-    //    }}>
-    //    {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-    //    <video
-    //      ref={videoRef}
-    //      style={styles.video}
-    //      autoPlay
-    //      playsInline
-    //      onPlay={handleVideoPlay}
-    //      onPause={handleVideoPause}
-    //      onEnded={handleVideoPause}
-    //      // width="640"
-    //      // height="480"
-    //    />
-    //    <canvas
-    //      ref={canvasRef}
-    //      style={styles.canvas}
-    //      // width="640"
-    //      // height="480"
-    //    />
-    //  </div>
+     <div style={{
+          position: 'relative',
+          width:"640px",
+          height:"480px"
+       }}>
+       {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+       <video
+         ref={videoRef}
+         style={styles.video}
+         autoPlay
+         playsInline
+         onPlay={handleVideoPlay}
+         onPause={handleVideoPause}
+         onEnded={handleVideoPause}
+         // width="640"
+         // height="480"
+       />
+       <canvas
+         ref={canvasRef}
+         style={styles.canvas}
+         // width="640"
+         // height="480"
+       />
+     </div>
 
-    //   )
-
-    //   :
+      )
+      :
       (
         <div style={{
           position: 'relative',
