@@ -218,13 +218,10 @@ const handlePlayPause = () => {
     }
 };
 
-
-  const getLeftEyebrow = (landmarks) => {
-    // Left eyebrow points in the 68-point model are 17–21
-    return landmarks.slice(17, 22);
-  };
-
-
+const getLeftEyebrow = (landmarks) => {
+  // Left eyebrow points in the 68-point model are 17–21
+  return landmarks.slice(17, 22);
+};
 
   const handleVideoPlay = () => {
     console.log('Video play event triggered');
@@ -236,8 +233,8 @@ const handlePlayPause = () => {
       rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
       videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
     )
-    
   };
+
   const handleVideoPause = () => {
     console.log('Video pause event triggered');
     isPlayingRef.current = false;
