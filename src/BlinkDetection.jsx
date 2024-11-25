@@ -114,6 +114,7 @@ useEffect(() => {
   useEffect(() => {
     blinkCountRef.current = blinkCount;
     if(blinkCount>=2 && faceExpressionRef.current=="happy"){
+      console.log("inside Smile!!")
       setFaceExpression("happy")
     }
 }, [blinkCount]);
@@ -368,7 +369,7 @@ const getLeftEyebrow = (landmarks) => {
                         type="radio"
                         name="action2"
                         value="smile"
-                        checked={blinkCount>=2 && faceExpressionRef.current=="happy"}  //Expression: ${faceExpressionRef.current}
+                        checked={blinkCountRef.current>=2 && faceExpressionRef.current=="happy"}  //Expression: ${faceExpressionRef.current}
                         onChange={()=>  videoRef.current.pause()}
                         style={{ marginRight: "5px" }}
                     />

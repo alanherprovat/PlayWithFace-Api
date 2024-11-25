@@ -230,7 +230,7 @@ import * as faceapi from 'face-api.js';
       console.log("leftEAR",leftEAR)
       console.log("rightEAR",rightEAR)
       console.log("Blink Detection Result",isBlinkDetected)
-      console.log("blink Count",blinkCount)
+      console.log("blink Count",blinkCountRef.current)
       console.log("leftEyeClosedFrames",leftEyeClosedFrames)
       console.log("rightEyeClosedFrames",rightEyeClosedFrames)
 
@@ -250,17 +250,6 @@ import * as faceapi from 'face-api.js';
         faceapi.draw.drawDetections(canvas, resizedDetections);
         faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
 
-
-
-
-      // // Draw each of the 68 landmarks
-      // ctx.fillStyle = '#0000ff'; // Blue for face landmarks
-      // positions.forEach(point => {
-      //   ctx.beginPath();
-      //   ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
-      //   ctx.fill();
-      // });
-      
 
         // Draw eyes specifically
         ctx.fillStyle = '#ff0000';
@@ -283,7 +272,7 @@ import * as faceapi from 'face-api.js';
           // Draw COmbined Avg
           ctx.font = '20px Arial';
           ctx.fillStyle = detectionRef.current.color;
-          ctx.fillText(`Expression: ${(leftEyeRatioAvg+rightEyeRatioAvg)/2}`, 50, 70);
+          ctx.fillText(`Combined Eye Avg: ${(leftEyeRatioAvg+rightEyeRatioAvg)/2}`, 50, 70);
 
 
 
@@ -297,7 +286,7 @@ import * as faceapi from 'face-api.js';
             rightEyeRatioAvg,blinkInProgress,EAR_THRESHOLD,EAR_CONSEC_FRAMES,leftEyeClosedFrames,rightEyeClosedFrames,
             videoRef,canvasRef,detectionRef,leftEyePoints,isPlayingRef,isPlaying,setIsPlaying
           ));
-      },0.5) //5ms of delay
+      },0.5) //0.5ms of delay
 
       // detectionRef.current.animationFrame = requestAnimationFrame(detectFace);
       
