@@ -280,6 +280,13 @@ import * as faceapi from 'face-api.js';
          ctx.fillStyle = detectionRef.current.color;
          ctx.fillText(`Expression: ${faceExpressionRef.current}`, 50, 50);
 
+          // Draw COmbined Avg
+          ctx.font = '20px Arial';
+          ctx.fillStyle = detectionRef.current.color;
+          ctx.fillText(`Expression: ${(leftEyeRatioAvg+rightEyeRatioAvg)/2}`, 50, 70);
+
+
+
       } else {
         console.log('No face detected in frame');
       }
