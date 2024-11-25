@@ -46,30 +46,24 @@ const BlinkDetection = ({cameraStream, setCameraStream, blinkCount, setBlinkCoun
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  // const [blinkCount, setBlinkCount] = useState(0);
   const [videoFile, setVideoFile] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState(null);
   const isPlayingRef = useRef(false);
   const blinkCountRef = useRef(blinkCount);
   const faceExpressionRef = useRef('');
-  // const [faceExpression,setFaceExpression]= useState('');
-  // const [cameraStream, setCameraStream] = useState(null);
-  const [selectedAction, setSelectedAction] = useState("");
+
   const ratioListLeft = []
   const ratioListRight = []
   var leftEyeRatioAvg=50;
   var rightEyeRatioAvg=50;
 
-  const handleRadioChange = (event) => {
-    setSelectedAction(event.target.value);
-};
 
   let blinkInProgress = false;
 
   // Threshold for determining if eye is open or closed
-const EAR_THRESHOLD = 0.26; // Tune this threshold based on testing
-const EAR_CONSEC_FRAMES = 3; // Number of consecutive frames below threshold to detect blink
+const EAR_THRESHOLD = 0.267; // Tune this threshold based on testing
+const EAR_CONSEC_FRAMES = 5; // Number of consecutive frames below threshold to detect blink
 
 let leftEyeClosedFrames = 0;
 let rightEyeClosedFrames = 0;
@@ -119,11 +113,10 @@ useEffect(() => {
 
   useEffect(() => {
     blinkCountRef.current = blinkCount;
-    if(blinkCount>=2 &&faceExpressionRef.current=="happy"){
+    if(blinkCount>=2 && faceExpressionRef.current=="happy"){
       setFaceExpression("happy")
     }
 }, [blinkCount]);
-
 
   const loadModels = async () => {
     try {
@@ -364,9 +357,8 @@ const getLeftEyebrow = (landmarks) => {
                         type="radio"
                         name="action1"
                         value="blink"
-                        // checked={selectedAction === {blinkCount}>=2}
                         checked={blinkCount>=2}
-                        onChange={handleRadioChange}
+                        onChange={()=>{}}
                         style={{ marginRight: "5px" }}
                     />
                     Please Blink Two Times
@@ -376,18 +368,14 @@ const getLeftEyebrow = (landmarks) => {
                         type="radio"
                         name="action2"
                         value="smile"
-                        checked={blinkCount>=2 && faceExpression=="happy"}  //Expression: ${faceExpressionRef.current}
-                        onChange={handleRadioChange}
+                        checked={blinkCount>=2 && faceExpressionRef.current=="happy"}  //Expression: ${faceExpressionRef.current}
+                        onChange={()=>  videoRef.current.pause()}
                         style={{ marginRight: "5px" }}
                     />
                     Please Smile
                 </label>
             </div>
-            {blinkCount>=2 && faceExpression=="happy" && (
-                videoRef.current.pause()
-            )}
-
-     
+           
 
       <div style={styles.controls}>
         <button onClick={handlePlayPause} disabled={!videoFile}  style={{ margin: "10px", padding: "10px" }}>
